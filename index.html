@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>楠楠鞋店 - 全品类款式展示</title>
+    <style>
+        /* 全局样式重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "微软雅黑", sans-serif;
+        }
+
+        /* 页面头部 */
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        NanNan Shoes 全品类展示 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        /* 分类导航栏 */
+        .category-nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            padding: 10px 0;
+            background-color: #34495e;
+        }
+
+        .category-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            background-color: #ecf0f1;
+            color: #2c3e50;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+
+        .category-btn.active {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .category-btn:hover:not(.active) {
+            background-color: #bdc3c7;
+        }
+
+        /* 鞋子展示容器 */
+        .shoe-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+            padding: 40px 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* 单个鞋子卡片 */
+        .shoe-card {
+            width: 260px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .shoe-card:hover {
+            transform: scale(1.05);
+        }
+
+        /* 鞋子图片样式 */
+        .shoe-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover; /* 保持图片比例，不拉伸 */
+            border-bottom: 1px solid #eee;
+        }
+
+        /* 鞋子信息区域 */
+        .shoe-info {
+            padding: 15px;
+        }
+
+        .shoe-name {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+
+        .shoe-category {
+            font-size: 12px;
+            color: #7f8c8d;
+            margin-bottom: 5px;
+            background-color: #f5f5f5;
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+
+        .shoe-price {
+            color: #e74c3c;
+            font-size: 15px;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .shoe-size {
+            color: #666;
+            font-size: 13px;
+        }
+
+        /* 图片放大弹窗 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-img {
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        /* 页脚 */
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        .contact-info {
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .copyright {
+            font-size: 12px;
+            color: #bdc3c7;
+        }
+    </style>
+</head>
+<body>
+    <!-- 页面头部 -->
+    <header>
+        <div class="shop-name">楠楠鞋店 - 全品类款式展示</div>
+        <p>实物拍摄 · 品类齐全 · 支持定制</p>
+    </header>
+
+    <!-- 分类导航 -->
+    <div class="category-nav">
+        <button class="category-btn active" data-category="全部">全部</button>
+        <button class="category-btn" data-category="男鞋">男鞋</button>
+        <button class="category-btn" data-category="女鞋">女鞋</button>
+        <button class="category-btn" data-category="运动鞋">运动鞋</button>
+        <button class="category-btn" data-category="拖鞋">拖鞋</button>
+    </div>
+
+    <!-- 鞋子展示区域 -->
+    <div class="shoe-container" id="shoeContainer">
+        <!-- 这里的内容会通过JS自动生成，无需手动写 -->
+    </div>
+
+    <!-- 图片放大弹窗 -->
+    <div class="modal" id="imgModal">
+        <span class="close-btn" id="closeBtn">&times;</span>
+        <img class="modal-img" id="modalImg">
+    </div>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="contact-info">
+            联系电话：15210945772 | 微信：melissa369048 | 地址：义乌市稠城街道朝阳门
+        </div>
+        <div class="copyright">© 2026 我的鞋店 版权所有</div>
+    </footer>
+
+    <!-- 引入鞋子数据文件 -->
+    <script src="shoe_data.js"></script>
+    <script>
+        // 获取页面元素
+        const shoeContainer = document.getElementById('shoeContainer');
+        const categoryBtns = document.querySelectorAll('.category-btn');
+        const modal = document.getElementById('imgModal');
+        const modalImg = document.getElementById('modalImg');
+        const closeBtn = document.getElementById('closeBtn');
+
+        // 初始化：渲染所有鞋子
+        renderShoes(shoeList);
+
+        // 分类筛选功能
+        categoryBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // 移除所有按钮的active样式
+                categoryBtns.forEach(b => b.classList.remove('active'));
+                // 给当前按钮添加active样式
+                btn.classList.add('active');
+                // 获取要筛选的品类
+                const category = btn.dataset.category;
+                // 筛选鞋子
+                let filteredShoes = shoeList;
+                if (category !== '全部') {
+                    filteredShoes = shoeList.filter(shoe => shoe.category === category);
+                }
+                // 重新渲染
+                renderShoes(filteredShoes);
+            });
+        });
+
+        // 图片放大功能
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        // 点击空白处关闭弹窗
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // 渲染鞋子卡片的函数
+        function renderShoes(shoes) {
+            // 清空容器
+            shoeContainer.innerHTML = '';
+            // 如果没有鞋子，显示提示
+            if (shoes.length === 0) {
+                shoeContainer.innerHTML = '<div style="width:100%;text-align:center;padding:50px;color:#666;">暂无该品类的鞋子</div>';
+                return;
+            }
+            // 遍历鞋子数据，创建卡片
+            shoes.forEach(shoe => {
+                const shoeCard = document.createElement('div');
+                shoeCard.className = 'shoe-card';
+                // 卡片内容
+                shoeCard.innerHTML = `
+                    <img src="${shoe.img}" alt="${shoe.name}" class="shoe-img">
+                    <div class="shoe-info">
+                        <div class="shoe-name">${shoe.name}</div>
+                        <div class="shoe-category">${shoe.category}</div>
+                        <div class="shoe-price">${shoe.price}</div>
+                        <div class="shoe-size">尺码：${shoe.size}</div>
+                    </div>
+                `;
+                // 点击卡片放大图片
+                shoeCard.addEventListener('click', () => {
+                    modal.style.display = 'flex';
+                    modalImg.src = shoe.img;
+                    modalImg.alt = shoe.name;
+                });
+                // 添加到容器
+                shoeContainer.appendChild(shoeCard);
+            });
+        }
+    </script>
+</body>
+</html>
